@@ -1,0 +1,16 @@
+[
+{
+  "modid": "hard2mine",
+  "name": "Hard2Mine",
+  "description": "A minecraft forge mod that makes it just that harder to mine",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Async"],
+  "credits": "To all the sexy minecraft chicks hitting up my DMs",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
