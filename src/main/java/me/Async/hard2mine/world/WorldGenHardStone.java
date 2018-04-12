@@ -3,6 +3,7 @@ package me.Async.hard2mine.world;
 import java.util.Random;
 
 import me.Async.hard2mine.registry.BlockRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -27,24 +28,29 @@ public class WorldGenHardStone implements IWorldGenerator {
 				{
 					BlockPos blockpos = new BlockPos(x, y, z);
                     IBlockState state = world.getBlockState(blockpos);
-                    if (state.getBlock() == Blocks.STONE)
+                    if (canReplace(state.getBlock()))
                     	world.setBlockState(blockpos, BlockRegistry.hardest_stone.getDefaultState(), 2);
 				}
 				for(int y = 16; y <= 30; y++)
 				{
 					BlockPos blockpos = new BlockPos(x, y, z);
                     IBlockState state = world.getBlockState(blockpos);
-                    if (state.getBlock() == Blocks.STONE)
+                    if (canReplace(state.getBlock()))
                     	world.setBlockState(blockpos, BlockRegistry.harder_stone.getDefaultState(), 2);
 				}
 				for(int y = 31; y <= 45; y++)
 				{
 					BlockPos blockpos = new BlockPos(x, y, z);
                     IBlockState state = world.getBlockState(blockpos);
-                    if (state.getBlock() == Blocks.STONE)
+                    if (canReplace(state.getBlock()))
                     	world.setBlockState(blockpos, BlockRegistry.hard_stone.getDefaultState(), 2);
 				}
 			}
 		}
+	}
+	
+	private static boolean canReplace(Block block)
+	{
+		return block == Blocks.STONE || block == Blocks.DIRT || block == Blocks.GRAVEL;
 	}
 }
