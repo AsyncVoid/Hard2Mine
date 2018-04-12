@@ -9,27 +9,27 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
 	
-	private static BlockHardBase hardStone;
-	private static BlockHardBase harderStone;
-	private static BlockHardBase hardestStone;
+	public static BlockHardBase hard_stone;
+	public static BlockHardBase harder_stone;
+	public static BlockHardBase hardest_stone;
 	
 	public static void init() {
-		hardStone = new BlockHardStone();
-		harderStone = new BlockHarderStone();
-		hardestStone = new BlockHardestStone();
+		hard_stone = new BlockHardStone();
+		harder_stone = new BlockHarderStone();
+		hardest_stone = new BlockHardestStone();
 	}
 	
 	public static void register()
 	{
-		hardStone.register();
-		harderStone.register();
-		hardestStone.register();
+		hard_stone.register();
+		harder_stone.register();
+		hardest_stone.register();
 	}
 	
 	public static void registerRenderers()
 	{
-		hardStone.registerRenderer();
-		harderStone.registerRenderer();
-		hardestStone.registerRenderer();
+		hard_stone.registerRenderer();
+		harder_stone.registerRenderer();
+		hardest_stone.registerRenderer();
 	}
 }

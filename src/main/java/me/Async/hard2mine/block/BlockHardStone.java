@@ -11,6 +11,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockHardStone extends BlockHardBase {
@@ -24,5 +25,11 @@ public class BlockHardStone extends BlockHardBase {
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.COBBLESTONE);
+    }
+	
+	@Override
+	public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, com.google.common.base.Predicate<IBlockState> target)
+    {
+        return Blocks.STONE.isReplaceableOreGen(state, world, pos, target);
     }
 }
