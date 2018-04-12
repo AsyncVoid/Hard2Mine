@@ -14,7 +14,7 @@ public class Hard2Mine
 {
     public static final String MODID = "hard2mine";
     public static final String VERSION = "0.1";
-    public static final String MCVERSIONS = "[1.10.2]";
+    public static final String MCVERSIONS = "[1.10.2, 1.11.2]";
     public static final String PROXY_CLIENT = "me.Async.hard2mine.proxy.ClientProxy";
     public static final String PROXY_COMMON = "me.Async.hard2mine.proxy.CommonProxy";
     
