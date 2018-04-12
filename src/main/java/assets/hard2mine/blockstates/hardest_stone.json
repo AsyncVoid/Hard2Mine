@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "normal": [
+            { "model": "hard2mine:hard_stone" },
+            { "model": "hard2mine:hard_stone_mirrored" },
+            { "model": "hard2mine:hard_stone", "y": 180 },
+            { "model": "hard2mine:hard_stone_mirrored", "y": 180 }
+        ]
+    }
+}
