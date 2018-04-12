@@ -43,13 +43,15 @@ public class BlockHardStone extends BlockHardBase {
 	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn)
     {
 		ItemStack stack = playerIn.getHeldItemMainhand();
-		if(stack == null || !(stack.getItem() instanceof ItemTool)) {
+		if(stack == null || !(stack.getItem() instanceof Item)) { //ItemTool
 			this.blockHardness = -1.0f;
+			//System.out.println(stack.getItem().getClass().getName());
 			return;
 		}
-		ItemTool item = (ItemTool) stack.getItem();
+		Item item = stack.getItem();
 		IBlockState state = worldIn.getBlockState(pos);
 		int harvestlevel = item.getHarvestLevel(stack, "pickaxe", playerIn, state);
+		//System.out.println(item.getClass().getName() + ":" + harvestlevel);
 		if(harvestlevel < 1){
 			this.blockHardness = -1.0f;
 			return;
