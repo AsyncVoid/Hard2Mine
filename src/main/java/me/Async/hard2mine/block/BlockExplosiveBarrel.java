@@ -85,6 +85,12 @@ public class BlockExplosiveBarrel extends BlockHardBase {
 	    explosion.doExplosionB(true);
 	}
 	
+	@Override
+	public boolean canDropFromExplosion(Explosion explosionIn)
+    {
+        return false;
+    }
+	
 	/*
 	@Override
 	public int tickRate(World worldIn)
@@ -157,10 +163,4 @@ public class BlockExplosiveBarrel extends BlockHardBase {
 	{
 	    return new BlockStateContainer(this, new IProperty[] { LIT });
 	}*/
-	
-	@Override
-	public boolean canDropFromExplosion(Explosion explosionIn)
-    {
-        return false;
-    }
 }

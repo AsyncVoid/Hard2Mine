@@ -467,6 +467,12 @@ public class BlockGunpowderTrail extends BlockHardBase implements IBlockColor {
 	    return state;
 	}
 	
+	@Override
+	public boolean canDropFromExplosion(Explosion explosionIn)
+    {
+        return false;
+    }
+	
 	private EnumAttachPosition getAttachPosition(IBlockAccess worldIn, BlockPos pos, EnumFacing direction) {
 	    BlockPos blockpos1 = pos.offset(direction);
 	    IBlockState state = worldIn.getBlockState(pos.offset(direction));
