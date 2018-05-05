@@ -6,12 +6,13 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit() {
         super.preInit();
+        BlockRegistry.registerRenderers();
     }
 	
 	@Override
     public void init() {
     	super.init();
-    	BlockRegistry.registerRenderers();
+    	
     	BlockRegistry.registerBlockColors();
     }
 	

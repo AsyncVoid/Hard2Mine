@@ -28,12 +28,12 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class ExplosiveBarrelExplosion extends Explosion {
+public class GunpowderBarrelExplosion extends Explosion {
 
 	private final World world;
 	private static final float size = 6.0f;
 	
-	public ExplosiveBarrelExplosion(World worldIn, BlockPos pos) {
+	public GunpowderBarrelExplosion(World worldIn, BlockPos pos) {
 		super(worldIn, null, pos.getX(), pos.getY(), pos.getZ(), size, false, true);
 		world = worldIn;
 	}

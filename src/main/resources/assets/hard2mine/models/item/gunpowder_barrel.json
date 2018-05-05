@@ -1,5 +1,5 @@
 {
-    "parent": "hard2mine:block/barrel",
+    "parent": "hard2mine:block/gunpowder_barrel",
 	"display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

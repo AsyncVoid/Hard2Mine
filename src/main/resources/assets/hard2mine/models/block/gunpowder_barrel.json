@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"particle": "hard2mine:block/barrel_side",
-		"texture": "hard2mine:block/barrel_side",
+		"particle": "hard2mine:blocks/barrel_side",
+		"texture": "hard2mine:blocks/barrel_side",
 		"texture1": "blocks/planks_oak"
 	},
 	"elements": [ 	 

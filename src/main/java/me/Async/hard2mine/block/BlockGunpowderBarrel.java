@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import me.Async.hard2mine.explosion.ExplosiveBarrelExplosion;
+import me.Async.hard2mine.explosion.GunpowderBarrelExplosion;
 import me.Async.hard2mine.explosion.GunpowderTrailExplosion;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,6 +15,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -33,12 +34,12 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockExplosiveBarrel extends BlockHardBase {
+public class BlockGunpowderBarrel extends BlockHardBase {
 
 	//public static final PropertyBool LIT = PropertyBool.create("lit");
 	
-	public BlockExplosiveBarrel() {
-		super("explosive_barrel", Material.WOOD);
+	public BlockGunpowderBarrel() {
+		super("gunpowder_barrel", Material.WOOD);
 		//this.setDefaultState(this.blockState.getBaseState().withProperty(LIT, false));
 		//this.setTickRandomly(true);
 	}
@@ -78,7 +79,7 @@ public class BlockExplosiveBarrel extends BlockHardBase {
 	
 	public static void explode(World world, BlockPos pos) {
 		world.setBlockToAir(pos);
-		ExplosiveBarrelExplosion explosion = new ExplosiveBarrelExplosion(world, pos);
+		GunpowderBarrelExplosion explosion = new GunpowderBarrelExplosion(world, pos);
 	    if (ForgeEventFactory.onExplosionStart(world, explosion))
 	      return;
 	    explosion.doExplosionA();
@@ -91,12 +92,78 @@ public class BlockExplosiveBarrel extends BlockHardBase {
         return false;
     }
 	
-	/*
+	@Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+    {
+        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+    }
+	
+	@Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    {
+        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+    }
+	
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (!worldIn.isRemote)
+        {
+            this.checkFallable(worldIn, pos);
+        }
+    }
+	
+	private void checkFallable(World worldIn, BlockPos pos)
+    {
+        if ((worldIn.isAirBlock(pos.down()) || canFallThrough(worldIn.getBlockState(pos.down()))) && pos.getY() >= 0)
+        {
+            int i = 32;
+
+            if (worldIn.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32)))
+            {
+                if (!worldIn.isRemote)
+                {
+                    EntityFallingBlock entityfallingblock = new EntityFallingBlock(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, worldIn.getBlockState(pos));
+                    entityfallingblock.shouldDropItem = false;
+                    //this.onStartFalling(entityfallingblock);
+                    worldIn.spawnEntityInWorld(entityfallingblock);
+                }
+            }
+            else
+            {
+                IBlockState state = worldIn.getBlockState(pos);
+                worldIn.setBlockToAir(pos);
+                BlockPos blockpos;
+
+                for (blockpos = pos.down(); (worldIn.isAirBlock(blockpos) || canFallThrough(worldIn.getBlockState(blockpos))) && blockpos.getY() > 0; blockpos = blockpos.down())
+                {
+                    ;
+                }
+
+                if (blockpos.getY() > 0)
+                {
+                	explode(worldIn, pos);
+                    //worldIn.setBlockState(blockpos.up(), state); 
+                }
+            }
+        }
+    }
+	
+	public static boolean canFallThrough(IBlockState state)
+    {
+        Block block = state.getBlock();
+        Material material = state.getMaterial();
+        return block == Blocks.FIRE || material == Material.AIR || material == Material.WATER || material == Material.LAVA;
+    }
+	
 	@Override
 	public int tickRate(World worldIn)
     {
         return 2;
     }
+	
+	/*
+	
 	
 	private void ignite(World world, BlockPos pos)
 	{

@@ -41,6 +41,11 @@ public class BlockHardBase extends Block {
 	
 	@SideOnly(Side.CLIENT)
     public void registerRenderer() {
+		System.out.println("--------------------------------------------");
+		System.out.println(Item.getItemFromBlock(this));
+		System.out.println(((ItemBlock)Item.getItemFromBlock(this)).getBlock());
+		System.out.println(this.getRegistryName());
+		System.out.println("--------------------------------------------");
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this),
                 0,
                 new ModelResourceLocation(this.getRegistryName(), "inventory")

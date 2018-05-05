@@ -1,0 +1,7 @@
+{
+    "variants": {
+		"normal": [
+            { "model": "hard2mine:gunpowder_barrel" }
+        ]
+    }
+}
