@@ -9,6 +9,7 @@ import me.Async.hard2mine.block.BlockHarderStone;
 import me.Async.hard2mine.block.BlockHardestStone;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -35,7 +36,7 @@ public class BlockRegistry {
 		harder_stone = new BlockHarderStone();
 		hardest_stone = new BlockHardestStone();
 		gunpowder_trail = new BlockGunpowderTrail();
-		//Blocks.FIRE.setFireInfo(gunpowder_trail, 100, 100);
+		Blocks.FIRE.setFireInfo(gunpowder_trail, 15, 20); //100,100
 	}
 	
 	public static void register()
@@ -52,5 +53,10 @@ public class BlockRegistry {
 		harder_stone.registerRenderer();
 		hardest_stone.registerRenderer();
 		gunpowder_trail.registerRenderer();
+	}
+	
+	public static void registerBlockColors()
+	{
+	    Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(gunpowder_trail, new Block[] { gunpowder_trail });
 	}
 }
