@@ -322,7 +322,9 @@ public class BlockGunpowderTrail extends BlockHardBase implements IBlockColor {
 	}
 	
 	public static boolean canConnect(IBlockAccess world, BlockPos pos, EnumFacing side) {
-	    return world.getBlockState(pos).getBlock() == BlockRegistry.gunpowder_trail;
+	    return world.getBlockState(pos).getBlock() == BlockRegistry.gunpowder_trail
+	    		|| world.getBlockState(pos).getBlock() == BlockRegistry.explosive_barrel
+	    		|| world.getBlockState(pos).getBlock() == Blocks.TNT;
 	}
 	
 	@Override

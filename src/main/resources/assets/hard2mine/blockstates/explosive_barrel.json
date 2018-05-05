@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "lit=false": [
+            { "model": "hard2mine:barrel" }
+        ],
+		"lit=true": [
+            { "model": "hard2mine:barrel" }
+        ]
+    }
+}

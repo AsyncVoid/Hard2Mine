@@ -2,6 +2,7 @@ package me.Async.hard2mine.registry;
 
 import java.lang.reflect.Field;
 
+import me.Async.hard2mine.block.BlockExplosiveBarrel;
 import me.Async.hard2mine.block.BlockGunpowderTrail;
 import me.Async.hard2mine.block.BlockHardBase;
 import me.Async.hard2mine.block.BlockHardStone;
@@ -18,6 +19,7 @@ public class BlockRegistry {
 	public static BlockHardBase hard_stone;
 	public static BlockHardBase harder_stone;
 	public static BlockHardBase hardest_stone;
+	public static BlockHardBase explosive_barrel;
 	public static BlockGunpowderTrail gunpowder_trail;
 	
 	public static void init() 
@@ -36,6 +38,7 @@ public class BlockRegistry {
 		harder_stone = new BlockHarderStone();
 		hardest_stone = new BlockHardestStone();
 		gunpowder_trail = new BlockGunpowderTrail();
+		explosive_barrel = new BlockExplosiveBarrel();
 		Blocks.FIRE.setFireInfo(gunpowder_trail, 15, 20); //100,100
 	}
 	
@@ -45,6 +48,7 @@ public class BlockRegistry {
 		harder_stone.register();
 		hardest_stone.register();
 		gunpowder_trail.register();
+		explosive_barrel.register();
 	}
 	
 	public static void registerRenderers()
@@ -53,6 +57,7 @@ public class BlockRegistry {
 		harder_stone.registerRenderer();
 		hardest_stone.registerRenderer();
 		gunpowder_trail.registerRenderer();
+		explosive_barrel.registerRenderer();
 	}
 	
 	public static void registerBlockColors()
