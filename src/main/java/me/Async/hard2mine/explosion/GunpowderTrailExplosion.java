@@ -23,20 +23,21 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class GunpowderTrailExplosion extends Explosion {
 
 	private final World world;
-	private final BlockPos location;
+	//private final BlockPos location;
 	private static final float size = 1.0f;
 	
 	public GunpowderTrailExplosion(World worldIn, BlockPos pos) {
 		super(worldIn, null, pos.getX(), pos.getY(), pos.getZ(), size/2, true, false);
-		location = pos;
+		//location = pos;
 		world = worldIn;
 	}
 	
 	public void doExplosion()
 	{
-	    int x = location.getX();
-	    int y = location.getY();
-	    int z = location.getZ();
+		Vec3d location = this.getPosition();
+	    int x = MathHelper.floor_double(location.xCoord);
+	    int y = MathHelper.floor_double(location.yCoord);
+	    int z = MathHelper.floor_double(location.zCoord);
 	    
 	    float actualX = x + 0.5f;
 	    float actualZ = z + 0.5f;
@@ -53,39 +54,40 @@ public class GunpowderTrailExplosion extends Explosion {
 	    Vec3d vec3 = new Vec3d(x, y, z);
 	    
 	    for (int i = 0; i < list.size(); i++) {
-	      Entity entity = (Entity)list.get(i);
-	      double distanceToExplosion = entity.getDistance(x, y, z) / size;
+	        Entity entity = (Entity)list.get(i);
+	        double distanceToExplosion = entity.getDistance(x, y, z) / size;
 	      
 
-	      if (distanceToExplosion <= 1.0D) {
-	        double diffX = entity.posX - actualX;
-	        double diffY = entity.posY + entity.getEyeHeight() - y;
-	        double diffZ = entity.posZ - actualZ;
-	        double displacement = MathHelper.sqrt_double(diffX * diffX + diffY * diffY + diffZ * diffZ);
-	        
-	        if (displacement != 0.0D) {
-	          diffX /= displacement;
-	          diffY /= displacement;
-	          diffZ /= displacement;
-	          double blockDensity = this.world.getBlockDensity(vec3, entity.getEntityBoundingBox());
-	          double damageAmount = (1.0D - distanceToExplosion) * blockDensity;
-	          entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (int)((damageAmount * damageAmount + damageAmount) / 2.0D * 8.0D * size + 1.0D));
-	          
-
-	          double protectionMultiplier = (entity instanceof EntityLivingBase) ? 
-	        		  EnchantmentProtection.getBlastDamageReduction((EntityLivingBase)entity, damageAmount) : 1.0D;
-	          entity.motionX += diffX * protectionMultiplier;
-	          entity.motionY += diffY * protectionMultiplier;
-	          entity.motionZ += diffZ * protectionMultiplier;
-	          
-	          if ((entity instanceof EntityPlayer)) {
-	        	  getPlayerKnockbackMap().put((EntityPlayer)entity, new Vec3d(diffX * damageAmount, diffY * damageAmount, diffZ * damageAmount));
-	          }
+	        if (distanceToExplosion <= 1.0D) {
+		        double diffX = entity.posX - actualX;
+		        double diffY = entity.posY + entity.getEyeHeight() - y;
+		        double diffZ = entity.posZ - actualZ;
+		        double displacement = MathHelper.sqrt_double(diffX * diffX + diffY * diffY + diffZ * diffZ);
+		        
+		        if (displacement != 0.0D) {
+		            diffX /= displacement;
+		            diffY /= displacement;
+		            diffZ /= displacement;
+		            double blockDensity = this.world.getBlockDensity(vec3, entity.getEntityBoundingBox());
+		            double damageAmount = (1.0D - distanceToExplosion) * blockDensity;
+		            entity.attackEntityFrom(DamageSource.causeExplosionDamage(this),
+		            		(int)((damageAmount * damageAmount + damageAmount) / 2.0D * 8.0D * size + 1.0D));
+		          
+	
+		            double protectionMultiplier = (entity instanceof EntityLivingBase) ? 
+		            		EnchantmentProtection.getBlastDamageReduction((EntityLivingBase)entity, damageAmount) : 1.0D;
+		            entity.motionX += diffX * protectionMultiplier;
+		            entity.motionY += diffY * protectionMultiplier;
+		            entity.motionZ += diffZ * protectionMultiplier;
+		          
+		            if ((entity instanceof EntityPlayer)) {
+		        	    getPlayerKnockbackMap().put((EntityPlayer)entity, 
+		        	    		new Vec3d(diffX * damageAmount, diffY * damageAmount, diffZ * damageAmount));
+		            }
+		        }
 	        }
-	      }
 	    }
 	    
-
 	    explodeBlock(x + 1, y, z);
 	    explodeBlock(x - 1, y, z);
 	    explodeBlock(x, y + 1, z);
@@ -99,22 +101,23 @@ public class GunpowderTrailExplosion extends Explosion {
 	    explodeBlock(x, y - 1, z - 1);
 	    
 	    if (Blocks.FIRE.canCatchFire(this.world, new BlockPos(x, y - 1, z), EnumFacing.UP)) {
-	      this.world.setBlockState(new BlockPos(x, y, z), Blocks.FIRE.getDefaultState());
+	    	this.world.setBlockState(new BlockPos(x, y, z), Blocks.FIRE.getDefaultState());
 	    }
-	  }
+	}
 	  
-	  public void explodeBlock(int x, int y, int z) {
-	    BlockPos pos = new BlockPos(x, y, z);
+	public void explodeBlock(int x, int y, int z) {
+		BlockPos pos = new BlockPos(x, y, z);
 	    IBlockState blockState = this.world.getBlockState(pos);
 	    Block block = blockState.getBlock();
 	    
-	    if ((block.getExplosionResistance(null) == 0.0F) && (block != Blocks.FIRE) && 
-	      (blockState.getMaterial() != Material.AIR)) {
-	      if (block.canDropFromExplosion(this)) {
-	        block.dropBlockAsItemWithChance(this.world, pos, blockState, 1.0F / size, 0);
-	      }
+	    if ((block.getExplosionResistance(null) == 0.0F) 
+	    		&& (block != Blocks.FIRE) 
+	    		&& (blockState.getMaterial() != Material.AIR)) {
+	    	if (block.canDropFromExplosion(this)) {
+	    		block.dropBlockAsItemWithChance(this.world, pos, blockState, 1.0F / size, 0);
+	        }
 	      
-	      block.onBlockExploded(this.world, pos, this);
+	        block.onBlockExploded(this.world, pos, this);
 	    }
-	  }
+	}
 }
