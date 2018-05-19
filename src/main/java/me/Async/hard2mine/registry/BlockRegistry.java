@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import me.Async.hard2mine.block.BlockGunpowderBarrel;
 import me.Async.hard2mine.block.BlockGunpowderTrail;
-import me.Async.hard2mine.block.BlockHardBase;
+import me.Async.hard2mine.block.ModBlock;
 import me.Async.hard2mine.block.BlockHardStone;
 import me.Async.hard2mine.block.BlockHarderStone;
 import me.Async.hard2mine.block.BlockHardestStone;
@@ -16,10 +16,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
 	
-	public static BlockHardBase hard_stone;
-	public static BlockHardBase harder_stone;
-	public static BlockHardBase hardest_stone;
-	public static BlockHardBase explosive_barrel;
+	public static ModBlock hard_stone;
+	public static ModBlock harder_stone;
+	public static ModBlock hardest_stone;
+	public static ModBlock explosive_barrel;
 	public static BlockGunpowderTrail gunpowder_trail;
 	
 	public static void init() 

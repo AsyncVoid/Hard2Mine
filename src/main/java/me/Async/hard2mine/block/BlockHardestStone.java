@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHardestStone extends BlockHardBase {
+public class BlockHardestStone extends ModBlock {
 	
 	public BlockHardestStone() {
 		super("hardest_stone", Material.ROCK);

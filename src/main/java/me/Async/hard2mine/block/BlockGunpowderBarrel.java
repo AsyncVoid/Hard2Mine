@@ -34,7 +34,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockGunpowderBarrel extends BlockHardBase {
+public class BlockGunpowderBarrel extends ModBlock {
 
 	//public static final PropertyBool LIT = PropertyBool.create("lit");
 	
@@ -68,7 +68,7 @@ public class BlockGunpowderBarrel extends BlockHardBase {
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
-	    if (((entity instanceof EntityArrow)) && (!world.isRemote)) {
+	    if (entity instanceof EntityArrow) {
 	        EntityArrow entityarrow = (EntityArrow)entity;
 	        if (entityarrow.isBurning()) {
 	            //ignite(world, pos);
@@ -77,13 +77,17 @@ public class BlockGunpowderBarrel extends BlockHardBase {
 	    }
 	}
 	
-	public static void explode(World world, BlockPos pos) {
-		world.setBlockToAir(pos);
-		GunpowderBarrelExplosion explosion = new GunpowderBarrelExplosion(world, pos);
-	    if (ForgeEventFactory.onExplosionStart(world, explosion))
-	      return;
-	    explosion.doExplosionA();
-	    explosion.doExplosionB(true);
+	public static void explode(World world, BlockPos pos) 
+	{
+		if(!world.isRemote)
+		{
+			GunpowderBarrelExplosion explosion = new GunpowderBarrelExplosion(world, pos);
+			if (ForgeEventFactory.onExplosionStart(world, explosion))
+				return;
+			world.setBlockToAir(pos);
+			explosion.doExplosionA();
+			explosion.doExplosionB(true);
+		}
 	}
 	
 	@Override

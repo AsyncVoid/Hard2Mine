@@ -45,7 +45,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockGunpowderTrail extends BlockHardBase implements IBlockColor {
+public class BlockGunpowderTrail extends ModBlock implements IBlockColor {
 	public static final PropertyEnum NORTH = PropertyEnum.<EnumAttachPosition>create("north", EnumAttachPosition.class);
     public static final PropertyEnum EAST = PropertyEnum.<EnumAttachPosition>create("east", EnumAttachPosition.class);
 	public static final PropertyEnum SOUTH = PropertyEnum.<EnumAttachPosition>create("south", EnumAttachPosition.class);
@@ -178,20 +178,20 @@ public class BlockGunpowderTrail extends BlockHardBase implements IBlockColor {
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
 	{
-		Integer power = (Integer)state.getValue(BURNING);
+		Integer burning = (Integer)state.getValue(BURNING);
 	    
-	    if (power.intValue() > 0) {
-	    	if (power.intValue() >= 8) {
+	    if (burning.intValue() > 0) {
+	    	if (burning.intValue() >= 8) {
 		        world.setBlockToAir(pos);
 		        explode(world, pos);
 		    } else {
-		        if (power.intValue() >= 4) {
+		        if (burning.intValue() >= 4) {
 		          igniteNeighbours(world, pos);
 		        }
 		        //TODO
 		        //world.scheduleUpdate(pos, state.withProperty(BURNING, Integer.valueOf(power.intValue() + 1)));
-		        world.setBlockState(pos, state.withProperty(BURNING, Integer.valueOf(power.intValue() + 1)), 2);
-		        world.scheduleUpdate(pos, this, 1);
+		        world.setBlockState(pos, state.withProperty(BURNING, Integer.valueOf(burning.intValue() + 1)), 2);
+		        world.scheduleUpdate(pos, this, 2);
 		    }
 		}
 	}

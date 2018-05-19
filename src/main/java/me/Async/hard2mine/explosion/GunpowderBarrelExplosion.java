@@ -38,6 +38,55 @@ public class GunpowderBarrelExplosion extends Explosion {
 		world = worldIn;
 	}
 	
+	/*
+	public void doExplosion()
+	{
+		if(world.isRemote)
+			doExplosionServer();
+		else
+			doExplosionClient();
+	}
+	
+	private void doExplosionServer()
+	{
+		Vec3d location = getPosition();
+		double explosionX = location.xCoord;
+		double explosionY = location.yCoord;
+		double explosionZ = location.zCoord;
+		for (BlockPos blockpos : getAffectedBlockPositions())
+        {
+            IBlockState iblockstate = this.world.getBlockState(blockpos);
+            Block block = iblockstate.getBlock();
+
+            if (iblockstate.getMaterial() != Material.AIR)
+            {
+                if (block.canDropFromExplosion(this))
+                {
+                    block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), 1.0F, 0);
+                }
+
+                block.onBlockExploded(this.world, blockpos, this);
+            }
+        }
+
+        
+        if (this.world.getBlockState(new BlockPos(explosionX, explosionY - 1, explosionZ)).isFullBlock())
+        {
+            this.world.setBlockState(new BlockPos(explosionX, explosionY, explosionZ), Blocks.FIRE.getDefaultState());
+        }
+	}
+	
+	private void doExplosionClient()
+	{
+		Vec3d location = getPosition();
+		double explosionX = location.xCoord;
+		double explosionY = location.yCoord;
+		double explosionZ = location.zCoord;
+		this.world.playSound((EntityPlayer)null, explosionX, explosionY, explosionZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
+        this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, explosionX, explosionY, explosionZ, 1.0D, 0.0D, 0.0D, new int[0]);
+	}
+	*/
+	
 	@Override
 	public void doExplosionA()
 	{
@@ -107,7 +156,7 @@ public class GunpowderBarrelExplosion extends Explosion {
         int maxY = MathHelper.floor_double(y + (double)explosionSize + 1.0D);
         int minZ = MathHelper.floor_double(z - (double)explosionSize - 1.0D);
         int maxZ = MathHelper.floor_double(z + (double)explosionSize + 1.0D);
-        
+        //List<Entity> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB((double)minX, (double)minY, (double)minZ, (double)maxX, (double)maxY, (double)maxZ));
         List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB((double)minX, (double)minY, (double)minZ, (double)maxX, (double)maxY, (double)maxZ));
         net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.world, this, list, explosionSize);
         Vec3d vec3d = new Vec3d(actualX, actualY, actualZ);
@@ -135,7 +184,7 @@ public class GunpowderBarrelExplosion extends Explosion {
                         double d14 = (double)this.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
                         double d10 = (1.0D - d12) * d14;
                         if(!(entity instanceof EntityItem))
-                        entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float)((int)((d10 * d10 + d10) / 2.0D * 7.0D * (double)explosionSize + 1.0D)));
+                        	entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float)((int)((d10 * d10 + d10) / 2.0D * 7.0D * (double)explosionSize + 1.0D)));
                         double d11 = 1.0D;
 
                         if (entity instanceof EntityLivingBase)
@@ -161,6 +210,7 @@ public class GunpowderBarrelExplosion extends Explosion {
             }
         }
 	}
+	
 	
 	@Override
 	public void doExplosionB(boolean spawnParticles)
@@ -218,7 +268,7 @@ public class GunpowderBarrelExplosion extends Explosion {
         }
     }
 	
-	
+	/*
 	public void explodeBlock(int x, int y, int z) {
 		BlockPos pos = new BlockPos(x, y, z);
 	    IBlockState blockState = this.world.getBlockState(pos);
@@ -233,5 +283,5 @@ public class GunpowderBarrelExplosion extends Explosion {
 	      
 	        block.onBlockExploded(this.world, pos, this);
 	    }
-	}
+	}*/
 }

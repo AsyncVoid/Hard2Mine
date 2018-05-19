@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHardStone extends BlockHardBase {
+public class BlockHardStone extends ModBlock {
 
 	public BlockHardStone() {
 		super("hard_stone", Material.ROCK);

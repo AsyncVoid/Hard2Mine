@@ -20,15 +20,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHardBase extends Block {
+public class ModBlock extends Block {
 
-	public BlockHardBase(String name, Material blockMaterialIn) {
+	public ModBlock(String name, Material blockMaterialIn) {
 		super(blockMaterialIn);
 		this.setUnlocalizedName(name);
 		this.setRegistryName(Hard2Mine.MODID, name);
 	}
 	
-	public BlockHardBase(String name, Material blockMaterialIn, MapColor blockMapColorIn) {
+	public ModBlock(String name, Material blockMaterialIn, MapColor blockMapColorIn) {
 		super(blockMaterialIn, blockMapColorIn);
 		this.setUnlocalizedName(name);
 		this.setRegistryName(Hard2Mine.MODID, name);
